@@ -1,4 +1,4 @@
-import { borderTypes, colors } from "@/themes";
+import { borderTypes, colors, spacing } from "@/themes";
 import { IconType } from "react-icons";
 import styled from "styled-components";
 
@@ -26,37 +26,39 @@ export const buttonThemes = {
 } as const
 
 const buttonPadding = {
-  small: "8px",
-  large: "12px",
+  small: spacing.xSmall,
+  large: spacing.small,
 } as const
 
-const Button = styled.button<{ size: keyof typeof buttonPadding }>`
-  padding-top: ${props => buttonPadding[props.size]};
-  padding-bottom: ${props => buttonPadding[props.size]};
-  padding-left: 16px;
-  padding-right: 16px;
+const Button = styled.button<{ $isPressed: boolean, $size: keyof typeof buttonPadding }>`
+  opacity: ${({ $isPressed }) => $isPressed ? 0.8 : 1};
+  padding-top: ${({ $size }) => buttonPadding[$size]}px;
+  padding-bottom: ${({ $size }) => buttonPadding[$size]}px;
+  padding-left: ${spacing.medium}px;
+  padding-right: ${spacing.medium}px;
   border: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   background-color: transparent;
+  cursor: pointer;
 `;
 
 export const buttonVariants = {
   text: Button,
-  contained: styled(Button) <{ border: keyof typeof borderTypes, buttonTheme: keyof typeof buttonThemes }>`
-    border-radius: ${props => borderTypes[props.border]};
-    background-color: ${props => buttonThemes[props.buttonTheme].button.default};
+  contained: styled(Button) <{ $border: keyof typeof borderTypes, $theme: keyof typeof buttonThemes }>`
+    border-radius: ${props => borderTypes[props.$border]}px;
+    background-color: ${props => buttonThemes[props.$theme].button.default};
     &:hover {
-      background-color: ${props => buttonThemes[props.buttonTheme].button.hover};
+      background-color: ${props => buttonThemes[props.$theme].button.hover};
     }
   `,
-  outlined: styled(Button) <{ border: keyof typeof borderTypes, buttonTheme: keyof typeof buttonThemes }>`
-    border-radius: ${props => borderTypes[props.border]};
-    border: 2px solid ${props => buttonThemes[props.buttonTheme].button.default};
+  outlined: styled(Button) <{ $border: keyof typeof borderTypes, $theme: keyof typeof buttonThemes }>`
+    border-radius: ${props => borderTypes[props.$border]}px;
+    border: 1px solid ${props => buttonThemes[props.$theme].button.default};
     &:hover {
-      border: 2px solid ${props => buttonThemes[props.buttonTheme].button.hover};
+      border: 1px solid ${props => buttonThemes[props.$theme].button.hover};
     }
   `,
 } as const
@@ -69,4 +71,5 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLElement> {
   readonly border?: keyof typeof borderTypes
   readonly LeftIcon?: IconType
   readonly RightIcon?: IconType
+  readonly handlePress?: React.MouseEventHandler<HTMLButtonElement>
 }

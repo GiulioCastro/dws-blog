@@ -1,56 +1,77 @@
-import { colors } from "@/themes";
-import styled from "styled-components";
+import styled, { css } from 'styled-components'
+
+interface TextProps {
+  $color?: string;
+  $noWrap?: boolean;
+  $numOfLines?: number;
+}
+
+const textStyles = css<TextProps>`
+  margin: 0;
+  color: ${({ $color = "inherit" }) => $color};
+  ${({ $noWrap = false, $numOfLines = 1 }) => $noWrap && `
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: ${$numOfLines};
+    overflow: hidden;
+    text-overflow: ellipsis; 
+  `}
+`
 
 export const typographyVariants = {
-  H1: styled.h1<{ color?: string }>`
-  font-size: 3.5em;
+  H1: styled.h1<TextProps>`
+    font-size: 3.5em;
     line-height: 130%;
     font-weight: 700;
-    color: ${props => props.color || colors.neutral.darkest};
+    ${textStyles}
   `,
-  H2: styled.h2<{ color?: string }>`
+  H2: styled.h2<TextProps>`
     font-size: 2.25em;
     line-height: 130%;
     font-weight: 700;
-    color: ${props => props.color || colors.neutral.darkest};
+    ${textStyles}
   `,
-  H3: styled.h3<{ color?: string }>`
+  H3: styled.h3<TextProps>`
     font-size: 1.25em;
     line-height: 130%;
     font-weight: 700;
-    color: ${props => props.color || colors.neutral.darkest};
+    ${textStyles}
   `,
-  Body: styled.p<{ color?: string }>`
+  Body: styled.p<TextProps>`
     font-size: 14px;
     line-height: 150%;
     font-weight: 400;
-    margin: 0;
-    color: ${props => props.color || colors.neutral.darkest};
+    ${textStyles}
   `,
-  BodyLg: styled.p<{ color?: string }>`
+  BodyBold: styled.p<TextProps>`
+    font-size: 14px;
+    line-height: 150%;
+    font-weight: 600;
+    ${textStyles}
+  `,
+  BodyLg: styled.p<TextProps>`
     font-size: 16px;
     line-height: 150%;
     font-weight: 400;
-    margin: 0;
-    color: ${props => props.color || colors.neutral.darkest};
+    ${textStyles}
   `,
-  BodyLgBold: styled.p<{ color?: string }>`
+  BodyLgBold: styled.p<TextProps>`
     font-size: 16px;
     line-height: 150%;
     font-weight: 600;
-    margin: 0;
-    color: ${props => props.color || colors.neutral.darkest};
+    ${textStyles}
   `,
-  Caption: styled.p<{ color?: string }>`
+  Caption: styled.p<TextProps>`
     font-size: 12px;
     line-height: 130%;
     font-weight: 400;
-    margin: 0;
-    color: ${props => props.color || colors.neutral.darkest};
+    ${textStyles}
   `,
 } as const
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
-  readonly color?: string
-  readonly variant: keyof typeof typographyVariants
+  readonly $color?: string;
+  readonly $noWrap?: boolean;
+  readonly $numOfLines?: number;
+  readonly variant?: keyof typeof typographyVariants
 }

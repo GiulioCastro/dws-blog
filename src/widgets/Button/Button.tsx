@@ -11,38 +11,49 @@ export function Button({
 	variant = "contained",
 	LeftIcon,
 	RightIcon,
+	handlePress,
 	...props
 }: ButtonProps) {
-	const [hover, setHover] = useState(false);
+	const [isHovered, setIsHovered] = useState(false);
+	const [isPressed, setIsPressed] = useState(false);
 
 	const selectedTheme = buttonThemes[theme]
 	const ButtonComponent = buttonVariants[variant]
 
-	const handleMouseEnter = () => setHover(true)
-	const handleMouseLeave = () => setHover(false)
+	const textColorVariant = variant === "contained" ? "text" : "button"
+	const textColor = isHovered ? selectedTheme[textColorVariant].hover : selectedTheme[textColorVariant].default
 
-	const textColor = hover ? selectedTheme.text.hover : selectedTheme.text.default
+	const handleMouseEnter = () => setIsHovered(true)
+	const handleMouseLeave = () => setIsHovered(false)
+
+	const handleMouseDown = () => setIsPressed(true);
+	const handleMouseUp = () => setIsPressed(false);
 
 	return (
 		<ButtonComponent
-			size={size}
-			border={border}
-			buttonTheme={theme}
+			type="button"
+			$isPressed={isPressed}
+			$size={size}
+			$border={border}
+			$theme={theme}
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
+			onMouseDown={handleMouseDown}
+			onMouseUp={handleMouseUp}
+			onClick={handlePress}
 			{...props}
 		>
 			{!!LeftIcon && (
 				<LeftIcon
 					color={textColor}
-					size={iconSizes.medium}
+					size={iconSizes.xSmall}
 					style={{ marginRight: spacing.xSmall }}
 				/>
 			)}
 			{!!text && (
 				<Typography
 					variant="BodyLgBold"
-					color={textColor}
+					$color={textColor}
 				>
 					{text}
 				</Typography>
@@ -50,7 +61,7 @@ export function Button({
 			{!!RightIcon && (
 				<RightIcon
 					color={textColor}
-					size={iconSizes.medium}
+					size={iconSizes.xSmall}
 					style={{ marginLeft: spacing.xSmall }}
 				/>
 			)}

@@ -2,13 +2,12 @@ import { TypographyProps, typographyVariants } from "./TypographyProps";
 
 export function Typography({
 	children,
-	color,
-	variant,
+	variant = "Body",
 	...props
 }: TypographyProps) {
 	const TypographyComponent = typographyVariants[variant]
 	return (
-		<TypographyComponent color={color} {...props}>
+		<TypographyComponent {...props}>
 			{children}
 		</TypographyComponent>
 	)
