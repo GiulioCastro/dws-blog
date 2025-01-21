@@ -21,10 +21,10 @@ export const SortByButton = styled.button`
   }
   &:hover {
     background-color: ${colors.accent1.medium};
-    color: ${colors.neutral.extraLight};
+    color: ${colors.neutral.lightest};
   }
   &:hover p {
-    color: ${colors.neutral.extraLight};
+    color: ${colors.neutral.lightest};
   }
   cursor: pointer;
   text-align: left;

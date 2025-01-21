@@ -1,10 +1,11 @@
 import { useEffect, useReducer } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
+import { compareAsc, compareDesc, parseISO } from "date-fns";
 import { getAuthors, getCategories, getPosts } from "@/services";
 import { Author, Category, Post } from "@/types";
 import { FilterAction, FilterActions, FilterState, UsePosts } from './PostsProps';
-import { compareAsc, compareDesc, parseISO } from "date-fns";
+import { useMatchMedia } from "@/hooks/useMatchMedia";
 
 function filtersReducer(filters: FilterState, action: FilterAction) {
   switch (action.type) {
@@ -52,13 +53,18 @@ function filtersReducer(filters: FilterState, action: FilterAction) {
       };
     }
     case FilterActions.TOGGLE_SORT_BY: {
-      console.log("action.data", action.data)
       const sortFn = action.data === "newest" ? compareAsc : compareDesc;
       return {
         ...filters,
         sortBy: action.data,
-        filteredPosts: filters.filteredPosts.sort((a, b) => sortFn(a.createdAt, b.createdAt))
+        filteredPosts: filters.filteredPosts.sort((a, b) => sortFn(parseISO(a.createdAt), parseISO(b.createdAt)))
       };
+    }
+    case FilterActions.SEARCH_FILTER: {
+      return {
+        ...filters,
+        categories: filters.categories.map((c) => ({ ...c, selected: c.name.toLowerCase().includes(action.data.toLowerCase()) }))
+      }
     }
     case FilterActions.APPLY_FILTERS: {
       const hasCategorySelected = filters.categories.some(c => c.selected);
@@ -74,7 +80,7 @@ function filtersReducer(filters: FilterState, action: FilterAction) {
 
       const sortFn = filters.sortBy === "newest" ? compareAsc : compareDesc;
 
-      const filteredAndSortedPosts = authorsFilteredPosts.sort((a, b) => sortFn(a.createdAt, b.createdAt));
+      const filteredAndSortedPosts = authorsFilteredPosts.sort((a, b) => sortFn(parseISO(a.createdAt), parseISO(b.createdAt)));
       return {
         ...filters,
         filteredPosts: filteredAndSortedPosts
@@ -88,6 +94,10 @@ function filtersReducer(filters: FilterState, action: FilterAction) {
 
 export function usePosts(): UsePosts {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isMobile = useMatchMedia("md");
+
+  const searchValue = searchParams.get("search");
 
   const posts = useQuery<Post[]>({
     queryKey: ['posts'],
@@ -133,6 +143,13 @@ export function usePosts(): UsePosts {
     }
   }, [authors.data])
 
+  useEffect(() => {
+    if (!!searchValue) {
+      dispatchFilters({ type: FilterActions.SEARCH_FILTER, data: searchValue })
+      dispatchFilters({ type: FilterActions.APPLY_FILTERS })
+    }
+  }, [searchValue])
+
   const navigatePost = (postId: string) => {
     navigate(`/post/${postId}`);
   }
@@ -145,6 +162,7 @@ export function usePosts(): UsePosts {
     posts: filters.filteredPosts,
     navigatePost,
     filters,
-    dispatchFilters
+    dispatchFilters,
+    isMobile
   }
 }

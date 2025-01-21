@@ -20,19 +20,19 @@ const textStyles = css<TextProps>`
 
 export const typographyVariants = {
   H1: styled.h1<TextProps>`
-    font-size: 3.5em;
+    font-size: 56px;
     line-height: 130%;
     font-weight: 700;
     ${textStyles}
   `,
   H2: styled.h2<TextProps>`
-    font-size: 2.25em;
+    font-size: 36px;
     line-height: 130%;
     font-weight: 700;
     ${textStyles}
   `,
   H3: styled.h3<TextProps>`
-    font-size: 1.25em;
+    font-size: 20px;
     line-height: 130%;
     font-weight: 700;
     ${textStyles}
@@ -65,6 +65,12 @@ export const typographyVariants = {
     font-size: 12px;
     line-height: 130%;
     font-weight: 400;
+    ${textStyles}
+  `,
+  CaptionBold: styled.p<TextProps>`
+    font-size: 12px;
+    line-height: 130%;
+    font-weight: 600;
     ${textStyles}
   `,
 } as const

@@ -26,7 +26,7 @@ export const buttonThemes = {
 } as const
 
 const buttonPadding = {
-  small: spacing.xSmall,
+  small: spacing.xxSmall,
   large: spacing.small,
 } as const
 

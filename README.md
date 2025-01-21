@@ -1,50 +1,37 @@
-# React + TypeScript + Vite
+<h3 align="center">DWS Blog</h3>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📝 Table of Contents
 
-Currently, two official plugins are available:
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Authors](#authors)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧐 About <a name = "about"></a>
 
-## Expanding the ESLint configuration
+This project is proposed technical frontend challenge for a blog with posts that the user can filter and also navigate to the post's page to read the full article. The project also has responsiveness for both mobile and desktop views.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🏁 Getting Started <a name = "getting_started"></a>
 
-- Configure the top-level `parserOptions` property like this:
+These instructions will get your copy of the project up and running on your local machine for development and testing purposes.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Prerequisites
+
+What do you need to install:
+
+- [Node](https://nodejs.org/en/download)
+
+### How to run
+
+Run the following commands:
+
+```
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+npm run dev
+```
+
+## ✍️ Authors <a name = "authors"></a>
+
+- [@GiulioCastro](https://github.com/GiulioCastro)

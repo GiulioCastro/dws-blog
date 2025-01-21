@@ -1,9 +1,9 @@
 import { Typography } from "@/widgets/Typography/Typography";
 import { BlogPostProps, Card, CardHeader, CardImage, CardBody, CardFooter, Tag, BulletPoint } from "./BlogPostProps";
 import { colors, spacing } from "@/themes";
-import { getLastName } from "@/utils/string";
 import { useState } from "react";
 import { format } from "date-fns";
+import { getLastName } from "@/utils";
 
 export function BlogPost({
 	post,

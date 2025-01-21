@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import Posts from '@/views/posts/Posts'
@@ -14,6 +14,7 @@ createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <Routes>
+        <Route index element={<Navigate to="/posts" replace />} />
         <Route path="/posts" element={<Posts />} />
         <Route path="/post/:postId" element={<Post />} />
       </Routes>

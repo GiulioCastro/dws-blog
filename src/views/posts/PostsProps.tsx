@@ -17,6 +17,7 @@ export enum FilterActions {
   SELECT_AUTHOR = 'SELECT_AUTHOR',
   REMOVE_AUTHOR = 'REMOVE_AUTHOR',
   TOGGLE_SORT_BY = 'TOGGLE_SORT_BY',
+  SEARCH_FILTER = 'SEARCH_FILTER',
   APPLY_FILTERS = 'APPLY_FILTERS',
 }
 
@@ -60,6 +61,11 @@ interface ToggleSortByAction {
   data: SortByType;
 }
 
+interface SearchFiltersByAction {
+  type: FilterActions.SEARCH_FILTER;
+  data: string;
+}
+
 interface ApplyFiltersByAction {
   type: FilterActions.APPLY_FILTERS;
 }
@@ -73,6 +79,7 @@ export type FilterAction = AddPostsAction
   | RemoveAuthorAction
   | ToggleSortByAction
   | ApplyFiltersByAction
+  | SearchFiltersByAction
 
 export type CategoryFilter = Category & { selected: boolean }
 export type AuthorFilter = Author & { selected: boolean }
@@ -89,12 +96,13 @@ export const FiltersContext = createContext<FilterState | null>(null);
 export const FiltersDispatchContext = createContext<React.Dispatch<FilterAction> | null>(null);
 
 export interface UsePosts {
-  readonly isPending: boolean
-  readonly isFetching: boolean
-  readonly isError: boolean
-  readonly error: Error | null
-  readonly posts?: Post[]
-  readonly navigatePost: (postId: string) => void
-  readonly filters: FilterState
-  readonly dispatchFilters: React.Dispatch<FilterAction>
+  readonly isPending: boolean;
+  readonly isFetching: boolean;
+  readonly isError: boolean;
+  readonly error: Error | null;
+  readonly posts?: Post[];
+  readonly navigatePost: (postId: string) => void;
+  readonly filters: FilterState;
+  readonly dispatchFilters: React.Dispatch<FilterAction>;
+  readonly isMobile: boolean;
 }

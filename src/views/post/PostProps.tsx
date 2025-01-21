@@ -6,6 +6,9 @@ export interface UsePost {
   readonly isError: boolean
   readonly error: Error | null
   readonly post?: Post
+  readonly latestArticles: Post[]
+  readonly isMobile: boolean
   readonly authorLastName: string
   readonly goBack: () => void
+  readonly navigatePost: (postId: string) => void
 }

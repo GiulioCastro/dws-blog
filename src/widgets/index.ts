@@ -163,6 +163,10 @@ export const Avatar = styled.img<{ size?: keyof typeof avatarSizes }>`
 
 export const BlogThumbnail = styled.img`
   object-fit: cover;
+  height: 350px;
+  @media (max-width: ${breakpoints.md}px) {
+    height: 175px;
+  }
   width: 100%;
   border-radius: ${borderTypes.rounded}px;
   margin-top: ${spacing.large}px;
@@ -231,10 +235,7 @@ export const FormInput = styled.input<{
   padding-right: ${spacing.xLarge}px;
 `;
 
-export const FormInputButton = styled.button`
-  position: absolute;
-  top: 8px;
-  right: 8px;
+export const SearchButton = styled.button`
   border: none;
   border-radius: ${borderTypes.circle}px;
   background-color: ${colors.neutral.darkest};
@@ -244,4 +245,10 @@ export const FormInputButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const FormInputButton = styled(SearchButton)`
+  position: absolute;
+  top: 8px;
+  right: 8px;
 `;
